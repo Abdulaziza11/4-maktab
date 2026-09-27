@@ -174,12 +174,28 @@
         }
 
         .mobile-menu {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100dvh;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
             transform: translateX(100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.2s ease, visibility 0.2s ease;
         }
 
         .mobile-menu.open {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
             transform: translateX(0);
+        }
+
+        @media (min-width: 1024px) {
+            .mobile-menu {
+                display: none !important;
+            }
         }
 
         input:focus,
@@ -313,7 +329,7 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="lg:hidden p-2 text-navy-700 hover:bg-navy-100 rounded-lg"
+                <button id="mobile-menu-btn" class="lg:hidden relative z-[70] p-2 text-navy-700 hover:bg-navy-100 rounded-lg"
                     aria-label="Menyuni ochish" aria-expanded="false" aria-controls="mobile-menu">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
@@ -321,7 +337,7 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu lg:hidden fixed inset-0 z-40 bg-white lg:hidden" role="dialog"
+        <div id="mobile-menu" class="mobile-menu lg:hidden fixed inset-0 z-[60] bg-white" role="dialog"
             aria-modal="true" aria-label="Mobil menyu">
             <div class="flex h-full flex-col">
                 <div class="flex items-center justify-between p-4 border-b border-navy-100">
@@ -381,7 +397,7 @@
                             Oltiariq tumanidagi 4-sonli umumiy o‘rta ta’lim maktabi
                         </h1>
                         <p class="text-lg sm:text-xl text-navy-100/90 leading-relaxed mb-8 max-w-2xl">
-                            Zamonaviy ta’lim, tarbiya va o‘quvchilar rivoji ucwwwwhun zarur imkoniyatlarni birlashtirgan
+                            Zamonaviy ta’lim, tarbiya va o‘quvchilar rivoji uchun zarur imkoniyatlarni birlashtirgan
                             maktabimizga xush kelibsiz.
                         </p>
                         <div class="flex flex-wrap gap-4">
@@ -891,10 +907,9 @@
                             id="gallery-grid">
                             <!-- Gallery items rendered by JS -->
                         </div>
-
-
                     </div>
                 </div>
+            </div>
         </section>
 
         <!-- CLUBS PAGE -->
@@ -1654,18 +1669,34 @@
             const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileMenu = document.getElementById('mobile-menu');
 
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('open');
-                mobileMenuBtn.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            });
+            if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('open');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                    document.body.style.overflow = 'hidden';
+                });
 
-            mobileMenuClose.addEventListener('click', closeMobileMenu);
+                mobileMenuClose.addEventListener('click', closeMobileMenu);
 
-            // Close mobile menu on link click
-            mobileMenu.querySelectorAll('[data-page]').forEach(link => {
-                link.addEventListener('click', closeMobileMenu);
-            });
+                // Close mobile menu on link click
+                mobileMenu.querySelectorAll('[data-page]').forEach(link => {
+                    link.addEventListener('click', closeMobileMenu);
+                });
+
+                // Close when clicking the menu background.
+                mobileMenu.addEventListener('click', (e) => {
+                    if (e.target === mobileMenu) {
+                        closeMobileMenu();
+                    }
+                });
+
+                // Close with Escape.
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                        closeMobileMenu();
+                    }
+                });
+            }
 
             // News filters
             document.querySelectorAll('[data-filter]').forEach(btn => {
@@ -1777,8 +1808,9 @@
         function closeMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            mobileMenu.classList.remove('open');
-            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+
+            if (mobileMenu) mobileMenu.classList.remove('open');
+            if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
 
