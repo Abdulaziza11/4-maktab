@@ -1,0 +1,1911 @@
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Oltiariq 4-sonli umumiy o'rta ta'lim maktabi - Resmiy veb-sayti">
+    <title>Oltiariq 4-sonli umumiy o'rta ta'lim maktabi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            200: '#bcccdc',
+                            300: '#9fb3c8',
+                            400: '#829ab1',
+                            500: '#627d98',
+                            600: '#486581',
+                            700: '#334e68',
+                            800: '#243b53',
+                            900: '#102a43',
+                            950: '#0c1e33',
+                        },
+                        green: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1580582996352-2b2e1d4585f4?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #10b981;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .gallery-item {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .gallery-item.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #10b981;
+            ring-offset: 2px;
+        }
+
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%;
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .news-card,
+        .event-card,
+        .teacher-card,
+        .club-card {
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover .news-image img,
+        .event-card:hover .event-image img {
+            transform: scale(1.05);
+        }
+
+        .news-image,
+        .event-image,
+        .teacher-image {
+            overflow: hidden;
+        }
+
+        .news-image img,
+        .event-image img,
+        .teacher-image img {
+            transition: transform 0.5s ease;
+        }
+
+        .toast {
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-navy-900 antialiased">
+    <a href="#main-content" class="skip-link">Asosiy kontentga o'tish</a>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-navy-100" role="navigation"
+        aria-label="Asosiy navigatsiya">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-18">
+                <!-- Logo -->
+                <a href="#" data-page="home"
+                    class="nav-link flex items-center gap-3 text-navy-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 rounded-lg px-2 py-1"
+                    aria-label="Bosh sahifa">
+                    <div class="w-10 h-10 rounded-xl bg-green-500 flex items-center justify-center">
+                        <i class="fas fa-school text-white text-lg"></i>
+                    </div>
+                    <div class="hidden sm:block">
+                        <p class="text-xs text-navy-500 leading-none">Oltiariq tumani</p>
+                        <p class="font-semibold text-sm leading-none">4-sonli maktab</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="#" data-page="home"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg"
+                        aria-current="page">Bosh sahifa</a>
+                    <a href="#" data-page="about"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg">Maktab</a>
+                    <a href="#" data-page="teachers"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg">O‘qituvchilar</a>
+                    <a href="#" data-page="news"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg">Yangiliklar</a>
+                    <a href="#" data-page="events"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg">Tadbirlar</a>
+                    <a href="#" data-page="gallery"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg">Galereya</a>
+                    <a href="#" data-page="clubs"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg">To‘garaklar</a>
+                    <a href="#" data-page="contact"
+                        class="nav-link px-3 py-2 text-sm font-medium text-navy-700 hover:text-green-600 rounded-lg">Aloqa</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-navy-700 hover:bg-navy-100 rounded-lg"
+                    aria-label="Menyuni ochish" aria-expanded="false" aria-controls="mobile-menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden fixed inset-0 z-40 bg-white lg:hidden" role="dialog"
+            aria-modal="true" aria-label="Mobil menyu">
+            <div class="flex h-full flex-col">
+                <div class="flex items-center justify-between p-4 border-b border-navy-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-green-500 flex items-center justify-center">
+                            <i class="fas fa-school text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-navy-500">Oltiariq tumani</p>
+                            <p class="font-semibold">4-sonli maktab</p>
+                        </div>
+                    </div>
+                    <button id="mobile-menu-close" class="p-2 text-navy-500 hover:bg-navy-100 rounded-lg"
+                        aria-label="Menyuni yopish">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <nav class="flex-1 overflow-y-auto p-4 space-y-1" aria-label="Mobil navigatsiya">
+                    <a href="#" data-page="home"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">Bosh
+                        sahifa</a>
+                    <a href="#" data-page="about"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">Maktab
+                        haqida</a>
+                    <a href="#" data-page="teachers"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">O‘qituvchilar</a>
+                    <a href="#" data-page="news"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">Yangiliklar</a>
+                    <a href="#" data-page="events"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">Tadbirlar</a>
+                    <a href="#" data-page="gallery"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">Galereya</a>
+                    <a href="#" data-page="clubs"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">To‘garaklar</a>
+                    <a href="#" data-page="contact"
+                        class="nav-link block px-4 py-3 text-base font-medium text-navy-700 rounded-xl hover:bg-green-50 hover:text-green-600">Aloqa</a>
+                </nav>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="pt-16 lg:pt-18" role="main">
+        <!-- HOME PAGE -->
+        <section id="page-home" class="page active" aria-labelledby="home-heading">
+            <!-- Hero Section -->
+            <section class="hero-bg relative min-h-[70vh] lg:min-h-[85vh] flex items-center" aria-label="Hero bo'limi">
+                <div class="absolute inset-0 bg-gradient-to-br from-navy-950/80 via-navy-900/70 to-navy-800/60"></div>
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
+                    <div class="max-w-3xl animate-slide-up">
+                        <span
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-300 text-sm font-medium mb-6">
+                            <i class="fas fa-award text-green-400"></i>
+                            Bilim — kelajak kaliti
+                        </span>
+                        <h1 id="home-heading"
+                            class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                            Oltiariq tumanidagi 4-sonli umumiy o‘rta ta’lim maktabi
+                        </h1>
+                        <p class="text-lg sm:text-xl text-navy-100/90 leading-relaxed mb-8 max-w-2xl">
+                            Zamonaviy ta’lim, tarbiya va o‘quvchilar rivoji ucwwwwhun zarur imkoniyatlarni birlashtirgan
+                            maktabimizga xush kelibsiz.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#" data-page="about"
+                                class="btn-primary px-8 py-3.5 text-base font-semibold rounded-xl flex items-center gap-2">
+                                Maktab haqida
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" data-page="contact"
+                                class="px-8 py-3.5 text-base font-semibold rounded-xl border-2 border-white/30 text-white hover:bg-white/10 transition-colors flex items-center gap-2">
+                                Aloqa bilan bog'lanish
+                                <i class="fas fa-phone"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Scroll indicator -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
+                    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+                        <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics -->
+            <section class="py-16 lg:py-24 bg-navy-50" aria-label="Maktab statistikasi">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                        <article
+                            class="text-center p-6 lg:p-8 bg-white rounded-2xl shadow-card border border-navy-100 card">
+                            <div class="flex items-center justify-center gap-3 mb-4">
+                                <div class="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center">
+                                    <i class="fas fa-user-graduate text-2xl text-green-600"></i>
+                                </div>
+                            </div>
+                            <p class="stat-number text-4xl lg:text-5xl font-bold text-navy-900 leading-none">885</p>
+                            <p class="text-navy-600 mt-2 font-medium">O‘quvchilar</p>
+                        </article>
+                        <article
+                            class="text-center p-6 lg:p-8 bg-white rounded-2xl shadow-card border border-navy-100 card">
+                            <div class="flex items-center justify-center gap-3 mb-4">
+                                <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-chalkboard-teacher text-2xl text-blue-600"></i>
+                                </div>
+                            </div>
+                            <p class="stat-number text-4xl lg:text-5xl font-bold text-navy-900 leading-none">81 </p>
+                            <p class="text-navy-600 mt-2 font-medium">O‘qituvchilar</p>
+                        </article>
+                        <article
+                            class="text-center p-6 lg:p-8 bg-white rounded-2xl shadow-card border border-navy-100 card">
+                            <div class="flex items-center justify-center gap-3 mb-4">
+                                <div class="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center">
+                                    <i class="fas fa-door-open text-2xl text-purple-600"></i>
+                                </div>
+                            </div>
+                            <p class="stat-number text-4xl lg:text-5xl font-bold text-navy-900 leading-none">32</p>
+                            <p class="text-navy-600 mt-2 font-medium">Sinflar</p>
+                        </article>
+                        <article
+                            class="text-center p-6 lg:p-8 bg-white rounded-2xl shadow-card border border-navy-100 card">
+                            <div class="flex items-center justify-center gap-3 mb-4">
+                                <div class="w-14 h-14 rounded-xl bg-orange-100 flex items-center justify-center">
+                                    <i class="fas fa-circle text-2xl text-orange-600"></i>
+                                </div>
+                            </div>
+                            <p class="stat-number text-4xl lg:text-5xl font-bold text-navy-900 leading-none">12</p>
+                            <p class="text-navy-600 mt-2 font-medium">To‘garaklar</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Latest News -->
+            <section class="py-16 lg:py-24" aria-label="So'nggi yangiliklar">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-navy-900">So‘nggi yangiliklar</h2>
+                            <p class="text-navy-500 mt-1">Maktab hayotidan eng so‘nggi hodisalar va e’lonlar</p>
+                        </div>
+                        <a href="#" data-page="news"
+                            class="text-green-600 hover:text-green-700 font-semibold flex items-center gap-1 text-sm">
+                            Barchasini ko‘rish <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="home-news">
+                        <!-- News cards will be rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upcoming Events -->
+            <section class="py-16 lg:py-24 bg-navy-50" aria-label="Yaqin tadbirlar">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-navy-900">Yaqin tadbirlar</h2>
+                            <p class="text-navy-500 mt-1">Kelajakdagi rejalashtirilgan maktab tadbirlari</p>
+                        </div>
+                        <a href="#" data-page="events"
+                            class="text-green-600 hover:text-green-700 font-semibold flex items-center gap-1 text-sm">
+                            Barchasini ko‘rish <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="home-events">
+                        <!-- Event cards will be rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- ABOUT PAGE -->
+        <section id="page-about" class="page" aria-labelledby="about-heading">
+            <div class="py-12 lg:py-16 bg-navy-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="mb-8" aria-label="Breadcrumbs">
+                        <ol class="flex items-center gap-2 text-sm text-navy-500">
+                            <li><a href="#" data-page="home" class="hover:text-green-600">Bosh sahifa</a></li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-navy-900 font-medium" aria-current="page">Maktab haqida</li>
+                        </ol>
+                    </nav>
+                    <header class="mb-12">
+                        <h1 id="about-heading" class="text-3xl sm:text-4xl font-bold text-navy-900">Maktab haqida</h1>
+                        <p class="text-navy-600 mt-2 text-lg">Oltiariq 4-sonli umumiy o‘rta ta‘lim maktabining tarixi,
+                            maqsadlari va asosiy ma’lumotlari</p>
+                    </header>
+                </div>
+            </div>
+
+            <div class="py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- School Photo & Intro -->
+                    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start mb-16">
+                        <div class="relative rounded-2xl overflow-hidden shadow-card border border-navy-100">
+                            <img src="rasmlar/image.png" alt="Oltiariq 4-sonli maktab binosi"
+                                class="w-full h-96 object-cover">
+                            <div
+                                class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-navy-900/90 to-transparent">
+                                <p class="text-white text-lg font-medium">30+ yil ta'lim sohasida xizmat</p>
+                            </div>
+                        </div>
+                        <div class="space-y-8">
+                            <div>
+                                <h2 class="text-2xl sm:text-3xl font-bold text-navy-900">Bizning missiya</h2>
+                                <p class="text-navy-600 mt-4 leading-relaxed text-lg">Har bir o‘quvchining shaxsiy
+                                    salohiyatini ochib berish, ularni zamonaviy talablarga mos keladigan bilim, ko‘nikma
+                                    va qadriyatlarga ega qilmasdan, fuqarolik javobgarligini va milliy qadriyatlarni
+                                    hurmat qilish ruhini tarbiyalab, kelajakda mamlakatimiz rivojlanishiga hissaga
+                                    yetadigan shaxslarni shakllantirish.</p>
+                            </div>
+                            <div class="border-t border-navy-100 pt-8">
+                                <h2 class="text-2xl sm:text-3xl font-bold text-navy-900">Bizning maqsadlar</h2>
+                                <ul class="mt-4 space-y-3" role="list">
+                                    <li class="flex items-start gap-3 p-4 bg-green-50 rounded-xl">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-check text-green-600"></i>
+                                        </div>
+                                        <p class="text-navy-700">Ta‘lim sifati va natijalari doimiy oshirish</p>
+                                    </li>
+                                    <li class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-check text-blue-600"></i>
+                                        </div>
+                                        <p class="text-navy-700">Zamonaviy ta‘lim texnologiyalarini joriy etish</p>
+                                    </li>
+                                    <li class="flex items-start gap-3 p-4 bg-purple-50 rounded-xl">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-check text-purple-600"></i>
+                                        </div>
+                                        <p class="text-navy-700">O‘quvchilarning ijodiy salohiyatlarini rivojlantirish
+                                        </p>
+                                    </li>
+                                    <li class="flex items-start gap-3 p-4 bg-orange-50 rounded-xl">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-check text-orange-600"></i>
+                                        </div>
+                                        <p class="text-navy-700">Ota-onalar hamkorligini kuchaytirish</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Information Cards -->
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                        <article class="card p-6 bg-white rounded-2xl shadow-card border border-navy-100 text-center">
+                            <div
+                                class="w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-map-marker-alt text-2xl text-green-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-navy-900 mb-2">Manzil</h3>
+                            <p class="text-navy-600 text-sm">Oltiariq tumani, Oltiariq shaharchasi, Mustaqillik ko‘chasi
+                                42-uy</p>
+                        </article>
+                        <article class="card p-6 bg-white rounded-2xl shadow-card border border-navy-100 text-center">
+                            <div class="w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-phone text-2xl text-blue-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-navy-900 mb-2">Telefon</h3>
+                            <p class="text-navy-600 text-sm">+998 (74) 555-12-34<br>+998 (74) 555-12-35</p>
+                        </article>
+                        <article class="card p-6 bg-white rounded-2xl shadow-card border border-navy-100 text-center">
+                            <div
+                                class="w-16 h-16 rounded-xl bg-purple-100 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-envelope text-2xl text-purple-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-navy-900 mb-2">Elektron pochta</h3>
+                            <p class="text-navy-600 text-sm">info@maktab4-olt.uz<br>director@maktab4-olt.uz</p>
+                        </article>
+                        <article class="card p-6 bg-white rounded-2xl shadow-card border border-navy-100 text-center">
+                            <div
+                                class="w-16 h-16 rounded-xl bg-orange-100 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-clock text-2xl text-orange-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-navy-900 mb-2">Ish vaqti</h3>
+                            <p class="text-navy-600 text-sm">Dushanba - Shanba: 07:30 - 18:00<br>Yakshanba: Dam olish
+                                kuni</p>
+                        </article>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <article class="card lg:col-span-2 p-8 bg-white rounded-2xl shadow-card border border-navy-100">
+                            <h2 class="text-2xl font-bold text-navy-900 mb-6">Asosiy ma'lumotlar</h2>
+                            <dl class="space-y-4 divide-y divide-navy-100">
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">Maktab turi</dt>
+                                    <dd class="text-navy-600">Umumiy o‘rta ta‘lim maktabi</dd>
+                                </div>
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">Tashkil etilgan yili</dt>
+                                    <dd class="text-navy-600">1992-yil</dd>
+                                </div>
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">Maktab direktori</dt>
+                                    <dd class="text-navy-600">Kamolot Maxmudova</dd>
+                                </div>
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">O‘qitish tili</dt>
+                                    <dd class="text-navy-600">O‘zbek</dd>
+                                </div>
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">Sinflar soni</dt>
+                                    <dd class="text-navy-600">32 ta (1-11 sinflar)</dd>
+                                </div>
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">Kabinetlar soni</dt>
+                                    <dd class="text-navy-600">32 ta (kompyuter, kimyo, biologiya, fizika
+                                        laboratoriyalari)</dd>
+                                </div>
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">Kutubxona fondi</dt>
+                                    <dd class="text-navy-600">1500+ kitob va jurnal</dd>
+                                </div>
+                                <div class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                    <dt class="font-medium text-navy-900">Sport maydonlari</dt>
+                                    <dd class="text-navy-600">Yopiq sport zal, voleybol
+                                        maydoni</dd>
+                                </div>
+                            </dl>
+                        </article>
+                        <article class="card p-8 bg-white rounded-2xl shadow-card border border-navy-100">
+                            <h2 class="text-2xl font-bold text-navy-900 mb-6">Yutuqlarimiz</h2>
+                            <ul class="space-y-4" role="list">
+                                <li class="flex items-start gap-3 p-4 bg-green-50 rounded-xl">
+                                    <div
+                                        class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-trophy text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-navy-900">Respublika fan olimpiadasi g‘olibi</p>
+                                        <p class="text-navy-600 text-sm">2023 yil - Informatika</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl">
+                                    <div
+                                        class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-medal text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-navy-900">Viloyat sport musobaqalari chempioni</p>
+                                        <p class="text-navy-600 text-sm">2024 yil - Mini-futbol</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 p-4 bg-purple-50 rounded-xl">
+                                    <div
+                                        class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-award text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-navy-900">"Yilning eng yaxshi maktabi" nomi</p>
+                                        <p class="text-navy-600 text-sm">Farg‘ona viloyati 2022 yil</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3 p-4 bg-orange-50 rounded-xl">
+                                    <div
+                                        class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-certificate text-orange-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-navy-900">Milliy "Barkamol avlod" festivali</p>
+                                        <p class="text-navy-600 text-sm">2023 yil - 3 ta sovrin</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEACHERS PAGE -->
+        <section id="page-teachers" class="page" aria-labelledby="teachers-heading">
+            <div class="py-12 lg:py-16 bg-navy-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="mb-8" aria-label="Breadcrumbs">
+                        <ol class="flex items-center gap-2 text-sm text-navy-500">
+                            <li><a href="#" data-page="home" class="hover:text-green-600">Bosh sahifa</a></li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-navy-900 font-medium" aria-current="page">O‘qituvchilar</li>
+                        </ol>
+                    </nav>
+                    <header class="mb-12">
+                        <h1 id="teachers-heading" class="text-3xl sm:text-4xl font-bold text-navy-900">O‘qituvchilar
+                            kollektivi</h1>
+                        <p class="text-navy-600 mt-2 text-lg">Tajribali, ijodkor va o‘z kasbiga sodiq pedagoglar jamoasi
+                        </p>
+                    </header>
+                </div>
+            </div>
+
+            <div class="py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Teachers Stats -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <div class="text-center p-6 bg-white rounded-2xl shadow-card border border-navy-100">
+                            <p class="stat-number text-4xl font-bold text-green-600">81</p>
+                            <p class="text-navy-600 mt-1">O‘qituvchi</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-2xl shadow-card border border-navy-100">
+                            <p class="stat-number text-4xl font-bold text-blue-600">48</p>
+                            <p class="text-navy-600 mt-1">Oliy malakali</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-2xl shadow-card border border-navy-100">
+                            <p class="stat-number text-4xl font-bold text-purple-600">15</p>
+                            <p class="text-navy-600 mt-1">Yosh o‘qituvchi</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-2xl shadow-card border border-navy-100">
+                            <p class="stat-number text-4xl font-bold text-orange-600">18</p>
+                            <p class="text-navy-600 mt-1">O‘rtacha tajriba (yil)</p>
+                        </div>
+                    </div>
+
+                    <!-- Teachers Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="teachers-grid">
+                        <!-- Teacher cards rendered by JS -->
+                    </div>
+
+                    <!-- View All Button -->
+
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWS PAGE -->
+        <section id="page-news" class="page" aria-labelledby="news-heading">
+            <div class="py-12 lg:py-16 bg-navy-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="mb-8" aria-label="Breadcrumbs">
+                        <ol class="flex items-center gap-2 text-sm text-navy-500">
+                            <li><a href="#" data-page="home" class="hover:text-green-600">Bosh sahifa</a></li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-navy-900 font-medium" aria-current="page">Yangiliklar</li>
+                        </ol>
+                    </nav>
+                    <header class="mb-12">
+                        <h1 id="news-heading" class="text-3xl sm:text-4xl font-bold text-navy-900">Yangiliklar va
+                            e‘lonlar</h1>
+                        <p class="text-navy-600 mt-2 text-lg">Maktab hayotidan so‘nggi hodisalar, yutuqlar va muhim
+                            e‘lonlar</p>
+                    </header>
+                </div>
+            </div>
+
+            <div class="py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Categories Filter -->
+                    <div class="flex flex-wrap gap-3 mb-10" role="group" aria-label="Yangiliklar kategoriyalari">
+                        <button
+                            class="filter-btn active px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-filter="all">Barchasi</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-filter="academic">Ilmiy yutuqlar</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-filter="events">Tadbirlar</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-filter="sports">Sport</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-filter="students">O‘quvchilar</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-filter="educational">Ta‘limiy</button>
+                    </div>
+
+                    <!-- News Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="news-grid">
+                        <!-- News cards rendered by JS -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-center gap-2 mt-12" id="news-pagination">
+                        <!-- Pagination rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENTS PAGE -->
+        <section id="page-events" class="page" aria-labelledby="events-heading">
+            <div class="py-12 lg:py-16 bg-navy-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="mb-8" aria-label="Breadcrumbs">
+                        <ol class="flex items-center gap-2 text-sm text-navy-500">
+                            <li><a href="#" data-page="home" class="hover:text-green-600">Bosh sahifa</a></li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-navy-900 font-medium" aria-current="page">Tadbirlar</li>
+                        </ol>
+                    </nav>
+                    <header class="mb-12">
+                        <h1 id="events-heading" class="text-3xl sm:text-4xl font-bold text-navy-900">Tadbirlar rejalasi
+                        </h1>
+                        <p class="text-navy-600 mt-2 text-lg">Kelajakdagi va o‘tgan maktab tadbirlarining to‘liq
+                            ro‘yxati</p>
+                    </header>
+                </div>
+            </div>
+
+            <div class="py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Tabs -->
+                    <div class="flex flex-wrap gap-2 mb-10 border-b border-navy-200" role="tablist"
+                        aria-label="Tadbir turlari">
+                        <button
+                            class="tab-btn active px-5 py-3 text-sm font-medium text-green-600 border-b-2 border-green-600"
+                            data-tab="upcoming" role="tab" aria-selected="true">Kelajakdagi</button>
+                        <button
+                            class="tab-btn px-5 py-3 text-sm font-medium text-navy-500 hover:text-navy-900 border-b-2 border-transparent"
+                            data-tab="past" role="tab" aria-selected="false">O‘tgan</button>
+                    </div>
+
+                    <!-- Events List -->
+                    <div class="space-y-4" id="events-list">
+                        <!-- Events rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY PAGE -->
+        <section id="page-gallery" class="page" aria-labelledby="gallery-heading">
+            <div class="py-12 lg:py-16 bg-navy-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="mb-8" aria-label="Breadcrumbs">
+                        <ol class="flex items-center gap-2 text-sm text-navy-500">
+                            <li><a href="#" data-page="home" class="hover:text-green-600">Bosh sahifa</a></li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-navy-900 font-medium" aria-current="page">Galereya</li>
+                        </ol>
+                    </nav>
+                    <header class="mb-12">
+                        <h1 id="gallery-heading" class="text-3xl sm:text-4xl font-bold text-navy-900">Foto galereya</h1>
+                        <p class="text-navy-600 mt-2 text-lg">Maktab hayotining eng yorqin lahzalari suratlarda</p>
+                    </header>
+                </div>
+            </div>
+
+            <div class="py-16 lg:py-24 pb-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Categories Filter -->
+                    <div class="flex flex-wrap gap-3 mb-10 justify-center" role="group"
+                        aria-label="Galereya kategoriyalari">
+                        <button
+                            class="filter-btn active px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-gallery="all">Barchasi</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-gallery="events">Tadbirlar</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-gallery="sports">Sport</button>
+                        <button
+                            class="filter-btn px-5 py-2.5 text-sm font-medium rounded-xl border border-navy-200 bg-white text-navy-700 hover:border-green-300 hover:text-green-600"
+                            data-gallery="classes">Dars jarayoni</button>
+
+                        <!-- Masonry Gallery -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                            id="gallery-grid">
+                            <!-- Gallery items rendered by JS -->
+                        </div>
+
+
+                    </div>
+                </div>
+        </section>
+
+        <!-- CLUBS PAGE -->
+        <section id="page-clubs" class="page" aria-labelledby="clubs-heading">
+            <div class="py-12 lg:py-16 bg-navy-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="mb-8" aria-label="Breadcrumbs">
+                        <ol class="flex items-center gap-2 text-sm text-navy-500">
+                            <li><a href="#" data-page="home" class="hover:text-green-600">Bosh sahifa</a></li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-navy-900 font-medium" aria-current="page">To‘garaklar</li>
+                        </ol>
+                    </nav>
+                    <header class="mb-12">
+                        <h1 id="clubs-heading" class="text-3xl sm:text-4xl font-bold text-navy-900">To‘garaklar va
+                            mashg‘ulotlar</h1>
+                        <p class="text-navy-600 mt-2 text-lg">O‘quvchilarning qiziqishlari va salohiyatlari bo‘yicha
+                            turli yo‘nalishlardagi to‘garaklar</p>
+                    </header>
+                </div>
+            </div>
+
+            <div class="py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="clubs-grid">
+                        <!-- Club cards rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT PAGE -->
+        <section id="page-contact" class="page" aria-labelledby="contact-heading">
+            <div class="py-12 lg:py-16 bg-navy-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="mb-8" aria-label="Breadcrumbs">
+                        <ol class="flex items-center gap-2 text-sm text-navy-500">
+                            <li><a href="#" data-page="home" class="hover:text-green-600">Bosh sahifa</a></li>
+                            <li><i class="fas fa-chevron-right text-xs"></i></li>
+                            <li class="text-navy-900 font-medium" aria-current="page">Aloqa</li>
+                        </ol>
+                    </nav>
+                    <header class="mb-12">
+                        <h1 id="contact-heading" class="text-3xl sm:text-4xl font-bold text-navy-900">Biz bilan
+                            bog‘laning</h1>
+                        <p class="text-navy-600 mt-2 text-lg">Savollaringiz bo‘lsa, quyidagi ma‘lumotlar orqali biz
+                            bilan bog‘lana olasiz</p>
+                    </header>
+                </div>
+            </div>
+
+            <div class="py-16 lg:py-24 pb-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <!-- Contact Info -->
+                        <div class="lg:col-span-1 space-y-6">
+                            <article class="card p-6 bg-white rounded-2xl shadow-card border border-navy-100">
+                                <h2 class="text-xl font-bold text-navy-900 mb-6">Aloqa ma‘lumotlari</h2>
+                                <dl class="space-y-6">
+                                    <div class="flex items-start gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <dt class="font-medium text-navy-900">Manzil</dt>
+                                            <dd class="text-navy-600 mt-1">Oltiariq tumani, Oltiariq shaharchasi,
+                                                Mustaqillik ko‘chasi 42-uy</dd>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-phone text-blue-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <dt class="font-medium text-navy-900">Telefon</dt>
+                                            <dd class="text-navy-600 mt-1">+998 (74) 555-12-34<br>+998 (74) 555-12-35
+                                            </dd>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-envelope text-purple-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <dt class="font-medium text-navy-900">Elektron pochta</dt>
+                                            <dd class="text-navy-600 mt-1">
+                                                info@maktab4-olt.uz<br>director@maktab4-olt.uz</dd>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-4">
+                                        <div
+                                            class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-clock text-orange-600 text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <dt class="font-medium text-navy-900">Ish vaqti</dt>
+                                            <dd class="text-navy-600 mt-1">Dushanba - Shanba: 07:30 - 18:00</dd>
+                                        </div>
+                                    </div>
+                                </dl>
+                            </article>
+
+                            <article class="card p-6 bg-white rounded-2xl shadow-card border border-navy-100">
+                                <h2 class="text-xl font-bold text-navy-900 mb-6">Ijtimoiy tarmoqlar</h2>
+                                <div class="flex gap-4">
+                                    <a href="#"
+                                        class="w-12 h-12 rounded-xl bg-navy-100 flex items-center justify-center text-navy-600 hover:bg-green-100 hover:text-green-600 transition-colors"
+                                        aria-label="Telegram"><i class="fab fa-telegram text-xl"></i></a>
+                                    <a href="#"
+                                        class="w-12 h-12 rounded-xl bg-navy-100 flex items-center justify-center text-navy-600 hover:bg-blue-100 hover:text-blue-600 transition-colors"
+                                        aria-label="Facebook"><i class="fab fa-facebook-f text-xl"></i></a>
+                                    <a href="#"
+                                        class="w-12 h-12 rounded-xl bg-navy-100 flex items-center justify-center text-navy-600 hover:bg-pink-100 hover:text-pink-600 transition-colors"
+                                        aria-label="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+                                    <a href="#"
+                                        class="w-12 h-12 rounded-xl bg-navy-100 flex items-center justify-center text-navy-600 hover:bg-red-100 hover:text-red-600 transition-colors"
+                                        aria-label="YouTube"><i class="fab fa-youtube text-xl"></i></a>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Map -->
+                        <div class="lg:col-span-2">
+                            <div class="card bg-white rounded-2xl shadow-card border border-navy-100 overflow-hidden">
+                                <div class="map-container">
+                                    <iframe
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.123456789!2d71.5!3d40.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDMwJzAwLjAiTiA3McKwMzAnMDAuMCJF!5e0!3m2!1suz!2s!4v1234567890"
+                                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                        title="Maktab joylashuvi xaritada">
+                                    </iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="mt-12">
+                        <div class="card bg-white rounded-2xl shadow-card border border-navy-100 p-8">
+                            <h2 class="text-2xl font-bold text-navy-900 mb-6">Bizga xabar yuboring</h2>
+                            <form id="contact-form" class="space-y-6" novalidate>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="name" class="block text-sm font-medium text-navy-700 mb-2">Ism <span
+                                                class="text-red-500" aria-hidden="true">*</span></label>
+                                        <input type="text" id="name" name="name" required autocomplete="name"
+                                            class="w-full px-4 py-3 rounded-xl border border-navy-200 bg-white text-navy-900 placeholder-navy-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
+                                            placeholder="Ismingizni kiriting">
+                                        <p class="mt-1 text-sm text-red-500 hidden" id="name-error"></p>
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-sm font-medium text-navy-700 mb-2">Telefon
+                                            <span class="text-red-500" aria-hidden="true">*</span></label>
+                                        <input type="tel" id="phone" name="phone" required autocomplete="tel"
+                                            class="w-full px-4 py-3 rounded-xl border border-navy-200 bg-white text-navy-900 placeholder-navy-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
+                                            placeholder="+998 XX XXX XX XX">
+                                        <p class="mt-1 text-sm text-red-500 hidden" id="phone-error"></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="subject" class="block text-sm font-medium text-navy-700 mb-2">Mavzu
+                                        <span class="text-red-500" aria-hidden="true">*</span></label>
+                                    <select id="subject" name="subject" required
+                                        class="w-full px-4 py-3 rounded-xl border border-navy-200 bg-white text-navy-900 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all appearance-none bg-no-repeat bg-right pr-10"
+                                        style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E'); background-size: 20px;">
+                                        <option value="">Mavzuni tanlang</option>
+                                        <option value="admission">Qabul va ro'yxatdan o'tish</option>
+                                        <option value="academic">Ta'limiy jarayon</option>
+                                        <option value="clubs">To'garaklar va shug'ullanmalar</option>
+                                        <option value="partnership">Hamkorlik</option>
+                                        <option value="feedback">Fikr-mulohaza</option>
+                                        <option value="other">Boshqa</option>
+                                    </select>
+                                    <p class="mt-1 text-sm text-red-500 hidden" id="subject-error"></p>
+                                </div>
+                                <div>
+                                    <label for="message" class="block text-sm font-medium text-navy-700 mb-2">Xabar
+                                        <span class="text-red-500" aria-hidden="true">*</span></label>
+                                    <textarea id="message" name="message" rows="5" required
+                                        class="w-full px-4 py-3 rounded-xl border border-navy-200 bg-white text-navy-900 placeholder-navy-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all resize-none"
+                                        placeholder="Xabaringizni yozing..."></textarea>
+                                    <p class="mt-1 text-sm text-red-500 hidden" id="message-error"></p>
+                                </div>
+                                <button type="submit"
+                                    class="btn-primary w-full sm:w-auto px-8 py-3.5 text-base font-semibold rounded-xl flex items-center gap-2">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Yuborish
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-950 text-navy-200" role="contentinfo">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <!-- School Info -->
+                <div class="lg:col-span-2">
+                    <a href="#" data-page="home"
+                        class="flex items-center gap-3 text-navy-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-navy-950 rounded-lg px-2 py-1"
+                        aria-label="Bosh sahifa">
+                        <div class="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center">
+                            <i class="fas fa-school text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-navy-400 leading-none">Oltiariq tumani</p>
+                            <p class="font-semibold text-base leading-none">4-sonli maktab</p>
+                        </div>
+                    </a>
+                    <p class="mt-6 text-navy-400 max-w-xs leading-relaxed">30 yildan ortiq vaqtdir biz kelajak
+                        avlodlarini tarbiyalaymiz. Zamonaviy ta'lim uslublari va milliy qadriyatlar birligi.</p>
+                    <div class="mt-6 flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-xl bg-navy-900 flex items-center justify-center text-navy-400 hover:bg-green-900/50 hover:text-green-400 transition-colors"
+                            aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-xl bg-navy-900 flex items-center justify-center text-navy-400 hover:bg-blue-900/50 hover:text-blue-400 transition-colors"
+                            aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-xl bg-navy-900 flex items-center justify-center text-navy-400 hover:bg-pink-900/50 hover:text-pink-400 transition-colors"
+                            aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-xl bg-navy-900 flex items-center justify-center text-navy-400 hover:bg-red-900/50 hover:text-red-400 transition-colors"
+                            aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <nav aria-label="Tezkor havolalar">
+                    <h3 class="font-semibold text-white mb-4">Tezkor havolalar</h3>
+                    <ul class="space-y-3" role="list">
+                        <li><a href="#" data-page="home"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>Bosh sahifa</a></li>
+                        <li><a href="#" data-page="about"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>Maktab haqida</a></li>
+                        <li><a href="#" data-page="teachers"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>O‘qituvchilar</a></li>
+                        <li><a href="#" data-page="news"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>Yangiliklar</a></li>
+                        <li><a href="#" data-page="events"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>Tadbirlar</a></li>
+                        <li><a href="#" data-page="gallery"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>Galereya</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Useful Links -->
+                <nav aria-label="Foydali havolalar">
+                    <h3 class="font-semibold text-white mb-4">Foydali havolalar</h3>
+                    <ul class="space-y-3" role="list">
+                        <li><a href="#" data-page="clubs"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>To‘garaklar</a></li>
+                        <li><a href="#" data-page="gallery"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>Galereya</a></li>
+                        <li><a href="#" data-page="contact"
+                                class="text-navy-400 hover:text-green-400 transition-colors flex items-center gap-2"><i
+                                    class="fas fa-chevron-right text-xs"></i>Aloqa</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Contact -->
+                <address class="not-italic" aria-label="Aloqa ma'lumotlari">
+                    <h3 class="font-semibold text-white mb-4">Aloqa</h3>
+                    <ul class="space-y-3 text-navy-400" role="list">
+                        <li class="flex items-start gap-3"><i
+                                class="fas fa-map-marker-alt text-green-400 mt-1 flex-shrink-0"></i><span>Oltiariq
+                                tumani, Oltiariq shaharchasi, Mustaqillik ko‘chasi 42-uy</span></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-phone text-blue-400 flex-shrink-0"></i><a
+                                href="tel:+998745551234" class="hover:text-blue-400 transition-colors">+998 (74)
+                                555-12-34</a></li>
+                        <li class="flex items-center gap-3"><i
+                                class="fas fa-envelope text-purple-400 flex-shrink-0"></i><a
+                                href="mailto:info@maktab4-olt.uz"
+                                class="hover:text-purple-400 transition-colors">info@maktab4-olt.uz</a></li>
+                        <li class="flex items-center gap-3"><i
+                                class="fas fa-clock text-orange-400 flex-shrink-0"></i><span>Dushanba - Shanba: 07:30 -
+                                18:00</span></li>
+                    </ul>
+                </address>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-navy-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-navy-500 text-sm">&copy; 2026 Oltiariq 4-sonli umumiy o‘rta ta‘lim maktabi. Barcha
+                    huquqlar himoyalangan.</p>
+                <p class="text-navy-500 text-sm">Maktab rasmiy sayti</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="toast fixed bottom-6 right-6 z-50 bg-navy-900 text-white px-6 py-4 rounded-xl shadow-lg flex items-center gap-3"
+        role="alert" aria-live="polite">
+        <i class="fas fa-check-circle text-green-400 text-xl"></i>
+        <span id="toast-message">Xabar yuborildi!</span>
+    </div>
+
+    <!-- Lightbox Modal for Gallery -->
+    <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-sm"
+        role="dialog" aria-modal="true" aria-label="Rasm ko'rinishi">
+        <button id="lightbox-close"
+            class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+            aria-label="Yopish"><i class="fas fa-times text-xl"></i></button>
+        <button id="lightbox-prev"
+            class="absolute left-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors hidden sm:flex"
+            aria-label="Oldingi"><i class="fas fa-chevron-left text-xl"></i></button>
+        <button id="lightbox-next"
+            class="absolute right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors hidden sm:flex"
+            aria-label="Keyingi"><i class="fas fa-chevron-right text-xl"></i></button>
+        <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[85vh] object-contain">
+        <div id="lightbox-caption" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-center px-4">
+        </div>
+    </div>
+
+    <script>
+        // ============= DATA =============
+        const newsData = [
+            { id: 1, category: 'academic', title: 'Respublika fan olimpiadasida maktabimiz o\'quvchilari 3 ta medal qazdi', desc: 'Farg\'ona viloyatida o‘tkazilgan Respublika fan olimpiadasida bizning maktabimizdan 5 ta o\'quvchi ishtirok etib, ulardan 3 nafari medal oldi.', date: '2024-01-15', image: 'https://images.unsplash.com/photo-1509062522246-3755977927f7?w=600&q=80' },
+            { id: 2, category: 'events', title: 'Maktabimizda "Ilm bayrami" tadbiri bo\'lib o\'tdi', desc: 'Yangi o\'quv yilining boshlanishi munosabati bilan maktabimiz huzurida "Ilm bayrami" nomli rang-barang tadbir tashkil etildi.', date: '2024-09-02', image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80' },
+            { id: 3, category: 'sports', title: 'Viloyat miqyosidagi mini-futbol musobaqalarda maktab jamoamiz 1-o\'rinni egalladi', desc: 'Farg\'ona viloyati maktablararo sport o\'yinlarida 4-sonli maktab jamoasi kuchli raqobatchilarni mag\'lub etib chempion bo\'ldi.', date: '2024-04-20', image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80' },
+            { id: 4, category: 'students', title: '11-sinf o\'quvchisi Jahongir Xolmatov "Barkamol avlod" festivalida 1-o\'rinni qazdi', desc: 'Milliy miqyosda bo\'lib o\'tgan "Barkamol avlod" bolalar festivalida maktabimiz 11-sinf o\'quvchisi Jahongir Xolmatov dasturlash bo\'yicha 1-o\'rinni egalladi.', date: '2024-05-10', image: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&q=80' },
+            { id: 5, category: 'educational', title: 'Maktabimizga yangi zamonaviy kompyuter klassi ochildi', desc: 'Xalq ta\'limi vazirligi va viloyat hokimligi hamkorligida maktabimizga 30 ta zamonaviy kompyuterdan iborat yangi informatika kabineti jihozlandi.', date: '2024-02-28', image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80' },
+            { id: 6, category: 'academic', title: 'O\'qituvchilarimiz "Yilning eng yaxshi o\'qituvchisi" tanloviда g\'olib bo\'ldi', desc: 'Viloyat miqyosida bo\'lib o\'tgan "Yilning eng yaxshi o\'qituvchisi" tanloviда bizning maktabimizdan 3 ta o\'qituvchi sovrinlari egasi bo\'ldi.', date: '2024-10-05', image: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?w=600&q=80' },
+            { id: 7, category: 'events', title: 'Ota-onalar yig\'ilishi: "O\'quv yili natijalari va kelajak rejalari"', desc: 'Maktab majlislar zalida ota-onalar yig\'ilishi bo\'lib, o\'quv yili natijalari va kelajaki rejalari haqida muhokama qilindi.', date: '2024-11-15', image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80' },
+            { id: 8, category: 'sports', title: 'Maktabimizda "Sog\'lom avlod" sport bayrami bo\'lib o\'tdi', desc: 'Yilning eng katta maktab sport tadbiri "Sog\'lom avlod" bayrami huzurida barcha sinflardan o\'quvchilar ishtirok etib rang-barang o\'tdi.', date: '2024-05-25', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80' },
+        ];
+
+        const eventsData = {
+            upcoming: [
+                { id: 1, date: '2024-12-20', day: '20', month: 'Dek', title: 'Ota-onalar yig\'ilishi', time: '10:00 - 12:00', location: 'Maktab majlislar zali', audience: 'Barcha ota-onalar', details: 'Birinchi yarim yil natijalari va ikkinchi yarim yil rejalari haqida ma\'lumot beriladi.' },
+                { id: 2, date: '2025-01-15', day: '15', month: 'Yan', title: 'Informatika haftaligi ochilishi', time: '09:00', location: 'Informatika kabinetlari', audience: '5-11 sinf o\'quvchilari', details: 'Hafta davomida dasturlash musobaqalari, robototexnika ko\'rsatmalari va IT mutaxassislari bilan uchrashuvlar bo\'lib o\'tadi.' },
+                { id: 3, date: '2025-02-14', day: '14', month: 'Fev', title: 'Adabiyot kechasi: "Navoiy va zamonaviylik"', time: '15:00 - 17:00', location: 'Kutubxona', audience: '9-11 sinf o\'quvchilari va ota-onalar', details: 'Alisher Navoiy ijodi haqida ochiq dars, she\'r o\'quv musobaqasi va adabiyot muhabbati ishtirokida ishtirok etadi.' },
+                { id: 4, date: '2025-03-08', day: '08', month: 'Mar', title: 'Xotin-Qizlar kuni bayrami', time: '10:00 - 12:30', location: 'Maktab majlislar zali', audience: 'Barcha o\'quvchilar va pedagoglar', details: 'Ayollar kuni munosabati bilan konsert, sovg\'alar taqdim etish va maktab onalari uchun uchrashuv uchrashuv.' },
+                { id: 5, date: '2025-03-21', day: '21', month: 'Mar', title: 'Navro‘z bayrami', time: '09:00 - 14:00', location: 'Maktab maydoni', audience: 'Hamma maktab jamiyati', details: 'Milliy bayram Navroz munosabati bilan rang-barang tadbir, milliy taomlar, o\'yinlar va konsert dasturi.' },
+                { id: 6, date: '2025-04-10', day: '10', month: 'Apr', title: 'Maktablararo sport o\'yinlari', time: '08:00 - 16:00', location: 'Viloyat sport kompleksi', audience: 'Sport to\'garaklari a\'zolari', details: 'Farg\'ona viloyati maktablariaro yengil atletika va futbol musobaqalari.' },
+            ],
+            past: [
+                { id: 7, date: '2024-11-15', day: '15', month: 'Noy', title: 'Ota-onalar yig\'ilishi', time: '10:00 - 12:00', location: 'Maktab majlislar zali', audience: 'Barcha ota-onalar', details: 'O\'quv yili boshiga oid rejalarning muhokamasi qilingan.' },
+                { id: 8, date: '2024-10-05', day: '05', month: 'Okt', title: 'O\'qituvchilar kuni bayrami', time: '09:00 - 13:00', location: 'Maktab majlislar zali', audience: 'Barcha pedagoglar va o\'quvchilar', details: 'O\'qituvchilar kuni munosabati bilan o\'quvchilar tayyorlagan konsert va tabriklar.' },
+                { id: 9, date: '2024-09-02', day: '02', month: 'Sen', title: 'Ilm bayrami - Yangi o\'quv yili ochilishi', time: '09:00 - 11:00', location: 'Maktab maydoni', audience: 'Hamma maktab jamiyati', details: 'Rasmiy ochilishi, 1-sinf o\'quvchilariga "Maktabga xush kelibsiz" tadbiri.' },
+                { id: 10, date: '2024-05-25', day: '25', month: 'May', title: '"Sog\'lom avlod" sport bayrami', time: '08:30 - 14:00', location: 'Maktab sport maydonlari', audience: 'Barcha sinf o\'quvchilari', details: 'Yilning eng katta sport tadbiri, turli sport turlari bo\'yicha musobaqalar.' },
+                { id: 11, date: '2024-04-20', day: '20', month: 'Apr', title: 'Viloyat mini-futbol chempionati', time: '09:00 - 17:00', location: 'Viloyat stadioni', audience: 'Maktab futbol jamoasi', details: 'Maktab jamoamiz chempion bo\'lib, kubokni qo‘lga kiritdi.' },
+            ]
+        };
+
+        const teachersData = [
+            { id: 1, name: 'Aliyev Abdulloh', subject: 'Informatika', experience: '22 yil', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', qualification: 'Oliy malakali o\'qituvchi', email: 'aliyev@maktab4-olt.uz' },
+            { id: 2, name: 'Karimova Dilshoda', subject: 'Ingliz tili', experience: '18 yil', photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80', qualification: 'Oliy malakali o\'qituvchi', email: 'karimova@maktab4-olt.uz' },
+            { id: 3, name: 'Raxmatov Sardor', subject: 'Matematika', experience: '25 yil', photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80', qualification: 'Oliy malakali o\'qituvchi', email: 'raxmatov@maktab4-olt.uz' },
+            { id: 4, name: 'Jo\'rayev Bekzod', subject: 'Ona tili va adabiyot', experience: '20 yil', photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80', qualification: 'Birinchi kategoriyali o\'qituvchi', email: 'jorayev@maktab4-olt.uz' },
+            { id: 5, name: 'Toshmatova Gulnoza', subject: 'Biologiya', experience: '15 yil', photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80', qualification: 'Oliy malakali o\'qituvchi', email: 'toshmatova@maktab4-olt.uz' },
+            { id: 6, name: 'Xasanov Jamshid', subject: 'Fizika', experience: '12 yil', photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80', qualification: 'Birinchi kategoriyali o\'qituvchi', email: 'xasanov@maktab4-olt.uz' },
+            { id: 7, name: 'Abdullayeva Nilufar', subject: 'Kimyo', experience: '10 yil', photo: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80', qualification: 'Birinchi kategoriyali o\'qituvchi', email: 'abdullayeva@maktab4-olt.uz' },
+            { id: 8, name: 'Qodirov Bahodir', subject: 'Tarix', experience: '30 yil', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', qualification: 'Oliy malakali o\'qituvchi', email: 'qodirov@maktab4-olt.uz' },
+        ];
+
+        const clubsData = [
+            { id: 1, name: 'IT va dasturlash', teacher: 'Aliyev Abdulloh', day: 'Dushanba, Chorshanba', time: '14:30 - 16:00', icon: 'fas fa-code', color: 'green', desc: 'Python, JavaScript, veb-dasturlash asoslari va robototexnika' },
+            { id: 2, name: 'Ingliz tili', teacher: 'Karimova Dilshoda', day: 'Seshanba, Payshanba', time: '14:30 - 16:00', icon: 'fas fa-language', color: 'blue', desc: 'Kundalik muloqot, IELTS tayyorgarlik, kinolar va kitoblar klubi' },
+            { id: 3, name: 'Rasm va chizmachilik', teacher: 'Yusupova Madina', day: 'Chorshanba, Juma', time: '14:00 - 15:30', icon: 'fas fa-palette', color: 'purple', desc: 'Akvarel, pastel, grafik dizayn asoslari va maktab koridorlarini bezash' },
+            { id: 4, name: 'Sport (futbol, voleybol)', teacher: 'Raxmatov Sardor', day: 'Har kuni', time: '15:00 - 17:00', icon: 'fas fa-futbol', color: 'orange', desc: 'Jismoniy tarbiya, jamoaviy o\'yinlar, maktab jamoasi tayyorgarligi' },
+            { id: 5, name: 'Musiqa', teacher: 'Tojiyeva Sevara', day: 'Seshanba, Juma', time: '14:30 - 16:00', icon: 'fas fa-music', color: 'pink', desc: 'Vokal, pianino, dutor, maktab ansambli va konsertlar tayyorgarligi' },
+            { id: 6, name: 'Kitobxonlik', teacher: 'Jo\'rayev Bekzod', day: 'Payshanba', time: '14:00 - 15:30', icon: 'fas fa-book-open', color: 'indigo', desc: 'Adabiyot majlislari, mualliflar bilan uchrashuvlar, yozuvchilik mahorati' },
+        ];
+
+        const galleryData = [
+            { id: 1, category: 'sports', src: 'rasmlar/Valebol.jpeg', alt: 'Sport Musobaqa', caption: 'Sport musobaqasi' },
+            { id: 2, category: 'sports', src: 'rasmlar/qValebol.jpeg', alt: 'Qizlar o\'rtasida do\'stona bellashuv', caption: 'Qizlar o\'rtasida do\'stona bellashuv' },
+            { id: 3, category: 'classes', src: 'rasmlar/Texnologiya.jpg', alt: 'Texnologiya', caption: 'Texnologiya' },
+            { id: 4, category: 'events', src: 'rasmlar/zakovat.jpg', alt: 'Bilimlar bellashuvi', caption: 'Bilimlar bellashuvi' },
+            { id: 5, category: 'classes', src: 'rasmlar/texnologiya1.jpg', alt: 'Texnologiya', caption: 'Texnologiya' },
+            { id: 6, category: 'events', src: 'rasmlar/savna-korinishi.jpg', alt: 'Sahna korinishi', caption: 'Sahna korinishi' },
+            { id: 7, category: 'events', src: 'rasmlar/zakovat1.jpg', alt: 'Zakovat', caption: 'Zakovat' },
+            { id: 8, category: 'events', src: 'rasmlar/poliz.jpg', alt: 'Poliz ekinlar kuni', caption: 'Poliz ekinlar kuni' },
+            { id: 9, category: 'events', src: 'rasmlar/Pazandachilik.jpg', alt: 'Pazandachilik', caption: 'Pazandachilik' },
+            { id: 10, category: 'classes', src: 'rasmlar/dars.jpg', alt: 'Dars jarayoni', caption: 'Dars jarayoni' },
+            { id: 11, category: 'events', src: 'rasmlar/8mart.jpg', alt: '8-Mart kuni', caption: '8-Mart kuni' },
+            { id: 12, category: 'events', src: 'rasmlar/14y.jpg', alt: '14-yanvar', caption: '14-yanvar' },
+        ];
+
+        // ============= STATE =============
+        let currentPage = 'home';
+        let newsPage = 1;
+        const newsPerPage = 6;
+        let currentNewsFilter = 'all';
+        let currentEventTab = 'upcoming';
+        let currentGalleryFilter = 'all';
+        let galleryLoaded = galleryData.length;
+        let teachersLoaded = teachersData.length;
+        let lightboxIndex = 0;
+        let filteredGallery = [];
+
+        // ============= UTILS =============
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ============= PAGE NAVIGATION =============
+        function navigateTo(page) {
+            // Update URL hash
+            window.location.hash = page;
+
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+            // Show target page
+            const targetPage = document.getElementById(`page-${page}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                currentPage = page;
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+
+                // Initialize page-specific content
+                initializePage(page);
+            }
+
+            // Update nav active states
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link.dataset.page === page);
+            });
+
+            // Close mobile menu
+            closeMobileMenu();
+        }
+
+        function initializePage(page) {
+            switch (page) {
+                case 'home':
+                    renderHomeNews();
+                    renderHomeEvents();
+                    break;
+                case 'news':
+                    renderNewsGrid();
+                    renderPagination();
+                    break;
+                case 'events':
+                    renderEvents();
+                    break;
+                case 'gallery':
+                    renderGallery();
+                    break;
+                case 'teachers':
+                    renderTeachers();
+                    break;
+                case 'clubs':
+                    renderClubs();
+                    break;
+                case 'about':
+                case 'contact':
+                    // Static content, no rendering needed
+                    break;
+            }
+        }
+
+        // ============= HOME PAGE RENDERING =============
+        function renderHomeNews() {
+            const container = document.getElementById('home-news');
+            const latestNews = newsData.slice(0, 3);
+            container.innerHTML = latestNews.map(news => createNewsCard(news)).join('');
+        }
+
+        function renderHomeEvents() {
+            const container = document.getElementById('home-events');
+            const upcomingEvents = eventsData.upcoming.slice(0, 3);
+            container.innerHTML = upcomingEvents.map(event => createEventCard(event)).join('');
+        }
+
+        // ============= NEWS PAGE =============
+        function getFilteredNews() {
+            if (currentNewsFilter === 'all') return newsData;
+            return newsData.filter(n => n.category === currentNewsFilter);
+        }
+
+        function renderNewsGrid() {
+            const container = document.getElementById('news-grid');
+            const filtered = getFilteredNews();
+            const start = (newsPage - 1) * newsPerPage;
+            const paginated = filtered.slice(start, start + newsPerPage);
+
+            container.innerHTML = paginated.map(news => createNewsCard(news, true)).join('');
+
+            // Animate cards
+            container.querySelectorAll('.news-card').forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, i * 100);
+            });
+        }
+
+        function renderPagination() {
+            const container = document.getElementById('news-pagination');
+            const filtered = getFilteredNews();
+            const totalPages = Math.ceil(filtered.length / newsPerPage);
+
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            // Previous
+            html += `<button class="pagination-btn px-4 py-2 rounded-lg border border-navy-200 text-navy-600 hover:bg-green-50 hover:text-green-600 hover:border-green-300 transition-colors ${newsPage === 1 ? 'opacity-50 pointer-events-none' : ''}" data-page="${newsPage - 1}" ${newsPage === 1 ? 'disabled' : ''} aria-label="Oldingi sahifa"><i class="fas fa-chevron-left"></i></button>`;
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= newsPage - 1 && i <= newsPage + 1)) {
+                    html += `<button class="pagination-btn px-4 py-2 rounded-lg ${i === newsPage ? 'bg-green-600 text-white' : 'border border-navy-200 text-navy-600 hover:bg-green-50 hover:text-green-600 hover:border-green-300'} transition-colors" data-page="${i}" aria-label="${i}-sahifa" ${i === newsPage ? 'aria-current="page"' : ''}>${i}</button>`;
+                } else if (i === newsPage - 2 || i === newsPage + 2) {
+                    html += `<span class="px-2 text-navy-400">...</span>`;
+                }
+            }
+
+            // Next
+            html += `<button class="pagination-btn px-4 py-2 rounded-lg border border-navy-200 text-navy-600 hover:bg-green-50 hover:text-green-600 hover:border-green-300 transition-colors ${newsPage === totalPages ? 'opacity-50 pointer-events-none' : ''}" data-page="${newsPage + 1}" ${newsPage === totalPages ? 'disabled' : ''} aria-label="Keyingi sahifa"><i class="fas fa-chevron-right"></i></button>`;
+
+            container.innerHTML = html;
+        }
+
+        // ============= EVENTS PAGE =============
+        function renderEvents() {
+            const container = document.getElementById('events-list');
+            const events = eventsData[currentEventTab];
+
+            container.innerHTML = events.map(event => createEventDetailCard(event)).join('');
+        }
+
+        // ============= GALLERY PAGE =============
+        function getFilteredGallery() {
+            if (currentGalleryFilter === 'all') return galleryData;
+            return galleryData.filter(g => g.category === currentGalleryFilter);
+        }
+
+        function renderGallery() {
+            const container = document.getElementById('gallery-grid');
+            filteredGallery = getFilteredGallery();
+            const items = filteredGallery.slice(0, galleryLoaded);
+
+            container.innerHTML = items.map((item, index) => createGalleryItem(item, index)).join('');
+
+            // Animate
+            setTimeout(() => {
+                container.querySelectorAll('.gallery-item').forEach((item, i) => {
+                    setTimeout(() => item.classList.add('show'), i * 50);
+                });
+            }, 50);
+        }
+
+        // ============= TEACHERS PAGE =============
+        function renderTeachers() {
+            const container = document.getElementById('teachers-grid');
+            const teachers = teachersData.slice(0, teachersLoaded);
+            container.innerHTML = teachers.map(teacher => createTeacherCard(teacher)).join('');
+        }
+
+        // ============= CLUBS PAGE =============
+        function renderClubs() {
+            const container = document.getElementById('clubs-grid');
+            container.innerHTML = clubsData.map(club => createClubCard(club)).join('');
+        }
+
+        // ============= CARD CREATORS =============
+        function createNewsCard(news, full = false) {
+            const categoryLabels = {
+                academic: 'Ilmiy yutuqlar',
+                events: 'Tadbirlar',
+                sports: 'Sport',
+                students: 'O\'quvchilar',
+                educational: 'Ta\'limiy'
+            };
+            const categoryColors = {
+                academic: 'bg-blue-100 text-blue-700',
+                events: 'bg-green-100 text-green-700',
+                sports: 'bg-orange-100 text-orange-700',
+                students: 'bg-purple-100 text-purple-700',
+                educational: 'bg-indigo-100 text-indigo-700'
+            };
+
+            return `
+                <article class="news-card card bg-white rounded-2xl shadow-card border border-navy-100 overflow-hidden">
+                    <div class="news-image relative h-48 overflow-hidden">
+                        <img src="${news.image}" alt="${news.title}" class="w-full h-full object-cover" loading="lazy">
+                        <span class="absolute top-3 left-3 px-3 py-1 text-xs font-medium rounded-full ${categoryColors[news.category]}">${categoryLabels[news.category]}</span>
+                    </div>
+                    <div class="p-5">
+                        <time class="text-xs text-navy-400" datetime="${news.date}">${formatDate(news.date)}</time>
+                        <h3 class="text-lg font-semibold text-navy-900 mt-2 line-clamp-2">${news.title}</h3>
+                        <p class="text-navy-600 text-sm mt-2 line-clamp-3">${news.desc}</p>
+                        <a href="#" class="inline-flex items-center gap-1 text-green-600 hover:text-green-700 font-medium text-sm mt-4">
+                            Batafsil <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+            `;
+        }
+
+        function createEventCard(event) {
+            const date = new Date(event.date);
+            return `
+                <article class="event-card card bg-white rounded-2xl shadow-card border border-navy-100 overflow-hidden">
+                    <div class="event-image relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="${event.title}" class="w-full h-full object-cover" loading="lazy">
+                        <div class="absolute bottom-0 left-0 p-4 bg-gradient-to-t from-navy-900/90 to-transparent text-white">
+                            <span class="text-xs font-medium text-green-300">${event.time}</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center text-green-600 font-bold text-lg">${date.getDate()}</span>
+                            <span class="text-sm text-navy-500">${date.toLocaleDateString('uz-UZ', { month: 'short' })}</span>
+                        </div>
+                        <h3 class="font-semibold text-navy-900 line-clamp-1">${event.title}</h3>
+                        <p class="text-navy-500 text-sm mt-1 flex items-center gap-1"><i class="fas fa-map-marker-alt text-xs"></i>${event.location}</p>
+                        <a href="#" data-page="events" class="inline-flex items-center gap-1 text-green-600 hover:text-green-700 font-medium text-sm mt-3">
+                            Tafsilotlar <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+            `;
+        }
+
+        function createEventDetailCard(event) {
+            const date = new Date(event.date);
+            return `
+                <article class="card bg-white rounded-2xl shadow-card border border-navy-100 p-6 hover:shadow-card-hover transition-shadow">
+                    <div class="flex flex-col md:flex-row md:items-center gap-6">
+                        <div class="flex flex-col items-center md:w-20 md:flex-shrink-0 bg-green-50 rounded-2xl p-4 text-center">
+                            <span class="text-3xl font-bold text-green-600">${date.getDate()}</span>
+                            <span class="text-sm font-medium text-green-700 uppercase">${date.toLocaleDateString('uz-UZ', { month: 'short' })}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-navy-900">${event.title}</h3>
+                            <div class="flex flex-wrap gap-6 mt-3 text-sm text-navy-600">
+                                <span class="flex items-center gap-1"><i class="fas fa-clock text-green-500"></i>${event.time}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-map-marker-alt text-green-500"></i>${event.location}</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-users text-green-500"></i>${event.audience}</span>
+                            </div>
+                            <p class="text-navy-500 text-sm mt-3">${event.details}</p>
+                        </div>
+                        ${currentEventTab === 'upcoming' ? `
+                            <span class="px-4 py-2 rounded-xl bg-green-50 text-green-700 text-sm font-medium self-start md:self-center">Rejalashtirilgan</span>
+                        ` : `
+                            <span class="px-4 py-2 rounded-xl bg-navy-100 text-navy-600 text-sm font-medium self-start md:self-center">O‘tgan</span>
+                        `}
+                    </div>
+                </article>
+            `;
+        }
+
+        function createGalleryItem(item, index) {
+            return `
+                <article class="gallery-item relative group aspect-[4/3] rounded-xl overflow-hidden cursor-pointer" data-index="${index}" tabindex="0" role="button" aria-label="${item.caption}ni kengaytirish">
+                    <img src="${item.src}" alt="${item.alt}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-medium">${item.caption}</p>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-expand text-navy-600"></i>
+                    </div>
+                </article>
+            `;
+        }
+
+        function createTeacherCard(teacher) {
+            return `
+                <article class="teacher-card card bg-white rounded-2xl shadow-card border border-navy-100 overflow-hidden">
+                    <div class="teacher-image relative h-56 overflow-hidden">
+                        <img src="${teacher.photo}" alt="${teacher.name}" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold text-navy-900 text-lg">${teacher.name}</h3>
+                        <p class="text-green-600 text-sm font-medium mt-1">${teacher.subject}</p>
+                        <p class="text-navy-500 text-sm mt-1">${teacher.qualification} • ${teacher.experience}</p>
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-navy-100">
+                            <button class="btn-primary px-4 py-2 text-sm font-medium rounded-lg">Batafsil</button>
+                            <a href="mailto:${teacher.email}" class="p-2 rounded-lg text-navy-400 hover:text-green-600 hover:bg-green-50 transition-colors" aria-label="${teacher.name}ga email yozish">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function createClubCard(club) {
+            const colorClasses = {
+                green: 'bg-green-100 text-green-600',
+                blue: 'bg-blue-100 text-blue-600',
+                purple: 'bg-purple-100 text-purple-600',
+                orange: 'bg-orange-100 text-orange-600',
+                pink: 'bg-pink-100 text-pink-600',
+                indigo: 'bg-indigo-100 text-indigo-600'
+            };
+
+            return `
+                <article class="club-card card bg-white rounded-2xl shadow-card border border-navy-100 p-6">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-xl ${colorClasses[club.color]} flex items-center justify-center flex-shrink-0">
+                            <i class="${club.icon} text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-navy-900 text-lg">${club.name}</h3>
+                            <p class="text-navy-500 text-sm mt-1">${club.desc}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm text-navy-600 border-t border-navy-100 pt-4">
+                        <div class="flex items-center gap-2"><i class="fas fa-user-tie text-green-500 w-5"></i><span>Ustoz: ${club.teacher}</span></div>
+                        <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-green-500 w-5"></i><span>${club.day}</span></div>
+                        <div class="flex items-center gap-2"><i class="fas fa-clock text-green-500 w-5"></i><span>${club.time}</span></div>
+                    </div>
+                </article>
+            `;
+        }
+
+        // ============= EVENT HANDLERS =============
+        function setupEventListeners() {
+            // Navigation links
+            document.querySelectorAll('[data-page]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.dataset.page;
+                    if (page) navigateTo(page);
+                });
+            });
+
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('open');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            });
+
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+
+            // Close mobile menu on link click
+            mobileMenu.querySelectorAll('[data-page]').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+
+            // News filters
+            document.querySelectorAll('[data-filter]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentNewsFilter = btn.dataset.filter;
+                    newsPage = 1;
+                    renderNewsGrid();
+                    renderPagination();
+                });
+            });
+
+            // News pagination
+            document.getElementById('news-pagination').addEventListener('click', (e) => {
+                const btn = e.target.closest('.pagination-btn');
+                if (btn && !btn.disabled) {
+                    newsPage = parseInt(btn.dataset.page);
+                    renderNewsGrid();
+                    renderPagination();
+                    // Scroll to top of news grid
+                    document.getElementById('news-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+
+            // Event tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn').forEach(b => {
+                        b.classList.remove('active', 'text-green-600', 'border-green-600');
+                        b.classList.add('text-navy-500', 'border-transparent');
+                        b.setAttribute('aria-selected', 'false');
+                    });
+                    btn.classList.add('active', 'text-green-600', 'border-green-600');
+                    btn.classList.remove('text-navy-500', 'border-transparent');
+                    btn.setAttribute('aria-selected', 'true');
+                    currentEventTab = btn.dataset.tab;
+                    renderEvents();
+                });
+            });
+
+            // Gallery filters
+            document.querySelectorAll('[data-gallery]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('[data-gallery]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentGalleryFilter = btn.dataset.gallery;
+                    galleryLoaded = galleryData.length;
+                    renderGallery();
+                });
+            });
+
+            // Gallery lightbox
+            document.getElementById('gallery-grid').addEventListener('click', (e) => {
+                const item = e.target.closest('.gallery-item');
+                if (item) {
+                    const index = parseInt(item.dataset.index);
+                    openLightbox(index);
+                }
+            });
+
+            document.getElementById('gallery-grid').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const item = e.target.closest('.gallery-item');
+                    if (item) {
+                        e.preventDefault();
+                        const index = parseInt(item.dataset.index);
+                        openLightbox(index);
+                    }
+                }
+            });
+
+            // Lightbox controls
+            document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+            document.getElementById('lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+            document.getElementById('lightbox-next').addEventListener('click', () => navigateLightbox(1));
+
+            document.getElementById('lightbox').addEventListener('click', (e) => {
+                if (e.target.id === 'lightbox') closeLightbox();
+            });
+
+            // Keyboard navigation for lightbox
+            document.addEventListener('keydown', (e) => {
+                if (!document.getElementById('lightbox').classList.contains('hidden')) {
+                    if (e.key === 'Escape') closeLightbox();
+                    else if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                    else if (e.key === 'ArrowRight') navigateLightbox(1);
+                }
+            });
+
+            // Contact form
+            document.getElementById('contact-form').addEventListener('submit', handleContactSubmit);
+
+            // Hash change navigation
+            window.addEventListener('hashchange', () => {
+                const page = window.location.hash.slice(1) || 'home';
+                if (page !== currentPage) {
+                    navigateTo(page);
+                }
+            });
+
+            // Initial hash check
+            const initialPage = window.location.hash.slice(1) || 'home';
+            if (initialPage !== 'home') {
+                navigateTo(initialPage);
+            }
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            mobileMenu.classList.remove('open');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        function openLightbox(index) {
+            lightboxIndex = index;
+            const item = filteredGallery[index];
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const caption = document.getElementById('lightbox-caption');
+
+            img.src = item.src;
+            img.alt = item.alt;
+            caption.textContent = item.caption;
+
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            // Focus management
+            document.getElementById('lightbox-close').focus();
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        function navigateLightbox(direction) {
+            lightboxIndex = (lightboxIndex + direction + filteredGallery.length) % filteredGallery.length;
+            openLightbox(lightboxIndex);
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            // Simple validation
+            let isValid = true;
+            const errors = {};
+
+            if (!data.name.trim()) {
+                errors.name = 'Ismni kiriting';
+                isValid = false;
+            }
+
+            if (!data.phone.trim()) {
+                errors.phone = 'Telefon raqamni kiriting';
+                isValid = false;
+            } else if (!/^\+?[0-9\s\-\(\)]{9,}$/.test(data.phone)) {
+                errors.phone = 'To\'g\'ri telefon raqam kiriting';
+                isValid = false;
+            }
+
+            if (!data.subject) {
+                errors.subject = 'Mavzuni tanlang';
+                isValid = false;
+            }
+
+            if (!data.message.trim()) {
+                errors.message = 'Xabarni yozing';
+                isValid = false;
+            }
+
+            // Show/hide errors
+            Object.keys(errors).forEach(key => {
+                const errorEl = document.getElementById(`${key}-error`);
+                const inputEl = document.getElementById(key);
+                if (errorEl) {
+                    errorEl.textContent = errors[key];
+                    errorEl.classList.remove('hidden');
+                }
+                if (inputEl) inputEl.classList.add('border-red-500');
+            });
+
+            // Clear previous errors for valid fields
+            ['name', 'phone', 'subject', 'message'].forEach(key => {
+                if (!errors[key]) {
+                    const errorEl = document.getElementById(`${key}-error`);
+                    const inputEl = document.getElementById(key);
+                    if (errorEl) errorEl.classList.add('hidden');
+                    if (inputEl) inputEl.classList.remove('border-red-500');
+                }
+            });
+
+            if (isValid) {
+                // Simulate form submission
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yuborilmoqda...';
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    showToast('Xabaringiz muvaffaqiyatli yuborildi! Tez orada sizga javob beramiz.');
+                    form.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 1500);
+            }
+        }
+
+        // ============= INIT =============
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+
+            // Initialize home page content
+            renderHomeNews();
+            renderHomeEvents();
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId !== '#') {
+                        e.preventDefault();
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
